@@ -109,4 +109,4 @@ var addDIY = function(){
     }
 
 }
-addDIY();
+//addDIY();

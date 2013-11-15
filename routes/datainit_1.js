@@ -33,7 +33,7 @@ var addShopTest = function(){
         console.log(err);
     });
 }
-//addShopTest();
+addShopTest();
 
 var productDemo1 = [
     {
@@ -580,4 +580,4 @@ var addProduct = function(){
         });
     }
 }
-addProduct();
+//addProduct();
