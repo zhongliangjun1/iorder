@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/effeckt/effeckt-all.autoprefixed.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/effeckt/effeckt.autoprefixed.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/effeckt/modules/list-items.autoprefixed.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/effeckt/modules/captions.autoprefixed.css">
+
+    <!--<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap/bootstrap.css">-->
+
+
+    <script src="/javascripts/lib/jquery-min.js"></script>
+    <!--<script src="/javascripts/utils/jquery.zclip.js"></script>-->
+    <script src="/javascripts/utils/jquery.zclip.js"></script>
+    <script src="/javascripts/lib/jquery.tmpl.js"></script>
+
+
+</head>
+<body>
+
+<!-- 活动创建表单 -->
+<div class="effeckt-modal-wrap" id="effeckt-modal-wrap"> <!-- for centering transform -->
+    <div class="effeckt-modal" id="effeckt-modal">
+        <h4><span id="effecktTitle">创建或加入他人的订单</span><span><a href="javascript:void(0);"><img id="dialog-close" src="/images/source/close-white.png"></a></span></h4>
+        <div id="effecktInput" class="effeckt-modal-content">
+            <div id="name-input-wrap">
+                <input id="name-input" type="text" name="name" class="form-control" placeholder="你的大名" />
+                <div id="dialog-without-name-error" class="dialog-error disappear">
+                    <span><img class="error-img"  src="/images/source/confused.png"/></span>
+                    <span class="error-msg">忘记写名字啦</span>
+                </div>
+            </div>
+            <div id="activity-input-wrap">
+                <input id="activity-input" type="text" name="activityId" class="form-control" placeholder="自己设定或加入别人的订单号(数字或字母)" />
+                <div id="dialog-without-activityId-error" class="dialog-error disappear">
+                    <span><img class="error-img"  src="/images/source/confused.png"/></span>
+                    <span class="error-msg">忘记写订单号啦</span>
+                </div>
+                <div id="dialog-locking-activityId-error" class="dialog-error disappear">
+                    <span><img class="error-img"  src="/images/source/confused.png"/></span>
+                    <span class="error-msg">这个订单号和别人重复啦</span>
+                </div>
+            </div>
+            <div id="new-activity-treat-wrap">
+                <span id="new-activity-treat" class="hidden">
+                    <img id="new-activity-treat-img" class="order-treat-img" src="/images/source/loading.ico" />
+                </span>
+            </div>
+            <div id="new-activity-button-wrap" class="dialog-button-wrap">
+                <button id="new-activity-button" class="dialog-button effeckt-button" data-effeckt-type="fill-from-left">
+                    <span id="new-activity-button-inner" class="label">我要发起</span></button>
+            </div>
+            <div id="join-activity-button-wrap" class="dialog-button-wrap">
+                <button id="join-activity-button" class="dialog-button effeckt-button" data-effeckt-type="fill-from-left">
+                    <span id="join-activity-button-inner" class="label">我要加入</span></button>
+            </div>
+            <div id="join-activity-treat-wrap">
+                <span id="join-activity-treat" class="hidden">
+                    <img id="join-activity-treat-img" class="order-treat-img" src="/images/source/loading.ico" />
+                </span>
+            </div>
+        </div>
+        <div id="effecktOutput" class="effeckt-modal-content disappear">
+            <div id="new-activity-success" class="disappear">
+                <div id="new-activity-success-img-wrap"><img id="new-activity-success-img" src="/images/source/happy.jpg" /></div>
+                <div id="new-activity-success-msg-wrap">
+                    <div id="new-activity-success-msg-title">成功创建订单</div>
+                    <div id="new-activity-success-msg-content">快把订单号&nbsp;<span id="new-activity-success-msg-content-orderId">678</span>&nbsp;或&nbsp;链接(点击复制)
+                        <div><a href="javascript:void(0);" id="new-activity-success-msg-content-href">localhost:3000/shop/320/activity-678</a></div>
+                        告诉你的小伙伴们吧
+                    </div>
+                </div>
+            </div>
+            <div id="join-activity-success" class="disappear">
+                <div id="join-activity-success-img-wrap"><img id="join-activity-success-img" src="/images/source/happy.jpg" /></div>
+                <div id="join-activity-success-msg-wrap">
+                    <div id="join-activity-success-msg-title">您点的东西已成功加入订单</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="effeckt-overlay" id="effeckt-overlay"></div>
+
+<!-- 订单详情 -->
+<nav class="effeckt-off-screen-nav effeckt-off-screen-nav-top-overlay" id="effeckt-off-screen-nav">
+
+    <h4>
+        <span id="effeckt-off-screen-nav-title">订单详情</span>
+        <a href="#0" id="effeckt-off-screen-nav-close" class="effeckt-off-screen-nav-close">×</a>
+    </h4>
+
+    <ul id="details-order-container">
+        <li id="details-order-title" style="">
+            <a href="#0">
+                <span class="details-no">序号</span>
+                <span class="details-name">品名</span>
+                <span class="details-size">尺寸/温度</span>
+                <span class="details-price">单价</span>
+                <span class="details-num">数量</span>
+                <span class="details-subtotal">小计</span>
+                <span class="details-who">下单人</span>
+            </a>
+        </li>
+        <li class="details-order" style=""><a href="#0">Little</a></li>
+        <li class="details-order" style=""><a href="#0">Piggy</a></li>
+        <li class="details-order" style=""><a href="#0">Went</a></li>
+        <li class="details-order" style=""><a href="#0">To</a></li>
+        <li class="details-order" style=""><a href="#0">Market</a></li>
+    </ul>
+
+    <div id="order-total-summary">
+        <span class="total-item">
+            <span>总份数:&nbsp;</span><span id="total-num"></span>
+        </span>
+        <span class="total-item">
+            <span>下单人数:&nbsp;</span><span id="total-people"></span>
+        </span>
+        <span class="total-item">
+            <span>总价:&nbsp;</span><span id="total-price"></span><span>元</span>
+        </span>
+    </div>
+
+    <div id="order-move-forward">
+        <span id="order-telephone-box">
+            <span>外送电话:&nbsp;</span><span><%= shop.telephone %></span>
+        </span>
+        <span id="order-combine-box">
+            <button id="order-combine-button"  class="effeckt-button" data-effeckt-type="fill-from-left">
+                <span class="label">合并相同项</span>
+            </button>
+        </span>
+        <span id="order-split-box" class="disappear">
+                    <button id="order-split-button"  class="effeckt-button" data-effeckt-type="fill-from-left">
+                        <span class="label">拆分为各人</span>
+                    </button>
+                </span>
+        <span id="order-confirm-box">
+            <button id="order-confirm-button"  class="effeckt-button" data-effeckt-type="fill-from-left">
+                <span class="label">确定并保存</span>
+            </button>
+        </span>
+        <div id="order-confirmed-box" class="disappear">
+            <span>订单axc已于12:34:00确认下单</span>
+        </div>
+    </div>
+
+
+</nav>
+
+
+<div id="head-pop-msg" class="disappear">
+    <span id="head-pop-msg-content">已复制到剪贴板</span>
+    <span id="head-pop-msg-close-wrap">
+        <a href="javascript:void(0);"><img id="head-pop-msg-close" src="/images/source/close-white.png"></a>
+    </span>
+</div>
+
+
+<div id="head">
+    <div id="logo" class="head-module" shopId="<%= shopId %>">便當点啦</div>
+    <div id="shop-info" class="head-module">
+        <span>{</span>
+        <span id="shop-info-name"><%= shop.shopName %></span>
+        ·
+        <span id="shop-info-branchName"><%= shop.branchName %></span>
+        <span>}</span>
+    </div>
+    <div id="message-box" class="head-module">
+        <span id="user"><a href="javascript:void(0);"><img id="user-img" class="head-module-img" src="/images/source/user.png" /></a></span>
+        <span id="drawer"><a href="javascript:void(0);"><img id="cart-img" class="head-module-img" src="/images/source/drawer.png" /></a></span>
+    </div>
+</div>
+
+
+<div id="box-left">
+    <div id="border">
+        <div id="navigation">
+            <div class="title">全部分类</div>
+            <ul id="nav-ul">
+                <% categorys.forEach(function(category){ %>
+                    <li><a href="#<%= category %>"><%= category %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <!--<div id="join">加入</div>-->
+        <div id="order" class="hidden">
+            <div  class="title">已点</div>
+            <div class="effeckt-list-wrap">
+                <!--<h4>Expand In/Shrink Out</h4>-->
+                <ul id="order-list" class="effeckt-list" data-effeckt-type="expand-in">
+                </ul>
+                <div id="order-button-wrap">
+                    <button id="order-button" class="effeckt-button" data-effeckt-type="fill-from-left">
+                    <span class="label">确定了</span></button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<div id="box-center">
+    <div id="center-content" >
+
+        <% if (categorys && cate2productsMap) { %>
+            <% categorys.forEach(function(category){ %>
+                <div id="<%= category %>" class="category clear-both"><img src="/images/source/category1.png"><%= category %></div>
+                <div class="effeckt effeckt-captions group">
+                     <div class="all-captions-wrap">
+                         <ul>
+                             <% cate2productsMap[category].forEach(function(product){  %>
+                             <li productId="<%= product._id %>" class="product">
+                                  <div class="product-box">
+                                      <div class="introduction">
+                                          <figure class="effeckt-caption" data-effeckt-type="effeckt-caption-5">
+                                              <img src="<%= product.productImg %>" alt="" >
+                                              <figcaption>
+                                                  <div class="effeckt-figcaption-wrap">
+                                                      <% if(product.introduce){ %>
+                                                          <h3>简介</h3>
+                                                          <% product.introduce.forEach(function(intro){  %>
+                                                            <p><%= intro %></p>
+                                                          <% }) %>
+                                                      <% } %>
+                                                  </div>
+                                              </figcaption>
+                                          </figure>
+                                          <div class="select">
+                                              <span class="se-size">
+                                                  <% product.expense.forEach(function(value){  %>
+                                                    <% if(value.size=="小"){ %>
+                                                        <a href="javascript:void(0);">
+                                                          <img class="small se note" src="/images/source/small-off.png" onmouseoverImg="/images/source/small-on.png" onmouseoutImg="/images/source/small-off.png"/>
+                                                        </a>
+                                                    <% } %>
+                                                    <% if(value.size=="中"){ %>
+                                                         <a href="javascript:void(0);">
+                                                           <img class="middle se note" src="/images/source/middle-off.png" onmouseoverImg="/images/source/middle-on.png" onmouseoutImg="/images/source/middle-off.png"/>
+                                                         </a>
+                                                    <% } %>
+                                                    <% if(value.size=="大"){ %>
+                                                        <a href="javascript:void(0);">
+                                                          <img class="big se note" src="/images/source/big-off.png" onmouseoverImg="/images/source/big-on.png" onmouseoutImg="/images/source/big-off.png"/>
+                                                        </a>
+                                                    <% } %>
+
+                                                  <% }) %>
+                                                  <% product.temperature.forEach(function(value){  %>
+                                                      <% if(value=="冷"){ %>
+                                                          <a href="javascript:void(0);">
+                                                            <img class="cold se note" src="/images/source/cold-off.png" onmouseoverImg="/images/source/cold-on.png" onmouseoutImg="/images/source/cold-off.png"/>
+                                                          </a>
+                                                      <% } %>
+                                                      <% if(value=="热"){ %>
+                                                          <a href="javascript:void(0);">
+                                                            <img class="hot se note" src="/images/source/hot-off.png" onmouseoverImg="/images/source/hot-on.png" onmouseoutImg="/images/source/hot-off.png"/>
+                                                          </a>
+                                                      <% } %>
+                                                  <% }) %>
+                                              </span>
+                                              <span class="se-num">
+                                                  <span class="sedes">来<span class="num">0</span>份</span>
+                                                  <a href="javascript:void(0);">
+                                                      <img class="minus se" src="/images/source/minus-alt-off.png" onmouseover="this.src='/images/source/minus-alt-on.png';" onmouseout="this.src='/images/source/minus-alt-off.png';"/>
+                                                  </a>
+                                                  <a href="javascript:void(0);">
+                                                      <img class="plus se" src="/images/source/plus-alt-off.png" onmouseover="this.src='/images/source/plus-alt-on.png';" onmouseout="this.src='/images/source/plus-alt-off.png';"/>
+                                                  </a>
+                                              </span>
+
+                                          </div>
+                                      </div>
+                                      <div class="name clear-both"><%= product.subjectName %>&nbsp;￥
+                                        <% product.expense.forEach(function(value, index){  %>
+                                          <% if(index === 0){ %>
+                                            <% if(product.expense.length === 1){ %>
+                                                <span class="price">/<%= value.price %></span>
+                                            <% } %>
+                                          <% }else{ %>
+                                            <span class="price">/<%= value.price %></span>
+                                          <% } %>
+                                        <% }) %>
+
+                                        <span productId="<%= product._id %>" class="choice-button-wrap hidden">
+                                            <button class="choice-button effeckt-button" data-effeckt-type="fill-from-left">
+                                            <span class="choice-button-inner label">我要了</span></button>
+                                        </span>
+                                        <span class="order-treating disappear order-treat">
+                                            <img class="order-treating-img order-treat-img" src="/images/source/loading.ico" />
+                                        </span>
+                                        <span class="order-treat-ok disappear order-treat">
+                                            <img class="order-treat-ok-img order-treat-img" src="/images/source/ok.png" />
+                                        </span>
+                                        <span class="order-treat-notok disappear order-treat">
+                                            <img class="order-treat-notok-img order-treat-img" src="/images/source/not-ok.png" />
+                                        </span>
+                                      </div>
+                                  </div>
+                             </li>
+                             <% }) %>
+
+
+                         </ul>
+                     </div>
+
+                </div>
+            <% }) %>
+        <% } %>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<script src="/javascripts/lib/jquery.cookie.js"></script>
+<script src="/javascripts/page/menu.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+
+</body>
+</html>
