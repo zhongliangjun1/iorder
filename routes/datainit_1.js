@@ -33,7 +33,7 @@ var addShopTest = function(){
         console.log(err);
     });
 }
-addShopTest();
+//addShopTest();
 
 var productDemo1 = [
     {
