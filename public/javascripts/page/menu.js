@@ -862,8 +862,8 @@ $(function(){
 
         $('#new-activity-success-msg-content-href').zclip({
             path: "/javascripts/ZeroClipboard.swf",
-            copy: function(){console.log('do it');
-                return $('#new-activity-success-msg-content-href').text();
+            copy: function(){
+                return 'http://'+$('#new-activity-success-msg-content-href').text();
             },
             afterCopy: function(){
                 var msg = '链接已复制到剪贴板';
