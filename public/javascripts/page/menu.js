@@ -540,6 +540,7 @@ $(function(){
 
                             registCopy(); // 需放置在页面已render之后
 
+                            $('#order-button-wrap').removeClass('disappear');
                             regist2activity(tempActivityId, rememberName, returnedData.creatorName);
                         }, 1000);
 
@@ -572,6 +573,7 @@ $(function(){
                             effecktOutputNode.slideDown('fast');
 
                             setTimeout(function(){
+                                $('#order-button-wrap').addClass('disappear');
                                 closeDialog();
                                 regist2activity(tempActivityId, rememberName, returnedData.creatorName);
                             }, 1000);
@@ -663,7 +665,7 @@ $(function(){
 //                            }
 //                        });
 
-
+                        $('#order-button-wrap').removeClass('disappear');
                         regist2activity(tempActivityId, rememberName, returnedData.creatorName);
                     }, 1000);
 
@@ -696,6 +698,7 @@ $(function(){
 
                         setTimeout(function(){
                             closeDialog();
+                            $('#order-button-wrap').addClass('disappear');
                             regist2activity(tempActivityId, rememberName, returnedData.creatorName);
                         }, 1000);
 
