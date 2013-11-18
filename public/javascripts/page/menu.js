@@ -231,6 +231,20 @@ $(function(){
             temperature = '热';
         }
 
+        // 温度: 时令&默认选中
+        if(coldNode.length===1 && hotNode.length===1){
+            var nowMonth = new Date().getMonth() + 1;
+            if(nowMonth>10 || nowMonth<5){
+                temperature = '热';
+            }else{
+                temperature = '冷';
+            }
+        }else if(coldNode.length===1){
+            temperature = '冷';
+        }else if(hotNode.length===1){
+            temperature = '热';
+        }
+
         var numNode = nowNode.find('.num');
         var num = numNode.text();
 
