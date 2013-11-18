@@ -390,6 +390,7 @@ var getActivity = function(req, res){
     queryActivity.exec(function(err, activity){
 
         if(err){
+            console.log(err);
             res.writeHead(500, {'Content-type': 'text/json;charset=utf-8'} );
             res.end(JSON.stringify({code:500,msg:'服务出问题了'}));
         }else{
