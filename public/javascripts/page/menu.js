@@ -560,10 +560,10 @@ $(function(){
 
                         var shopId = parseInt($('#logo').attr('shopId'));
                         $.cookie('rememberName', rememberName, { path: '/' } );
-                        $.cookie('tempActivityId', tempActivityId, { expires: 1, path: '/shop/'+shopId  });
+                        $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
-                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1, path: '/shop/'+shopId  });
-                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1, path: '/shop/'+shopId  });
+                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
 
                     }else{
                         dialogLockingActivityIdErrorNode.removeClass('disappear');
@@ -596,10 +596,10 @@ $(function(){
 
                         var shopId = parseInt($('#logo').attr('shopId'));
                         $.cookie('rememberName', rememberName, { path: '/' } );
-                        $.cookie('tempActivityId', tempActivityId, { expires: 1, path: '/shop/'+shopId  });
+                        $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
-                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1, path: '/shop/'+shopId  });
-                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1, path: '/shop/'+shopId  });
+                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
 
                     }else{
                         joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
@@ -684,10 +684,10 @@ $(function(){
                     }, 1000);
 
                     $.cookie('rememberName', rememberName, { path: '/' } );
-                    $.cookie('tempActivityId', tempActivityId, { expires: 1, path: '/shop/'+shopId  });
+                    $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                     tempActivity_IdGlobal = returnedData.activity_Id;
-                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1, path: '/shop/'+shopId  });
-                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1, path: '/shop/'+shopId  });
+                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
 
                 }else{
                     dialogLockingActivityIdErrorNode.removeClass('disappear');
@@ -719,10 +719,10 @@ $(function(){
                     }, 1000);
 
                     $.cookie('rememberName', rememberName, { path: '/' } );
-                    $.cookie('tempActivityId', tempActivityId, { expires: 1, path: '/shop/'+shopId  });
+                    $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                     tempActivity_IdGlobal = returnedData.activity_Id;
-                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1, path: '/shop/'+shopId  });
-                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1, path: '/shop/'+shopId  });
+                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
 
                 }else{
                     joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
@@ -819,9 +819,9 @@ $(function(){
             $.cookie('lastActivity_Id', tempActivity_IdGlobal, { expires: 60, path: '/shop/'+shopId  });
             tempActivityIdGlobal = null;
             tempActivity_IdGlobal = null;
-            $.cookie('tempActivityId', null, { expires: 1, path: '/shop/'+shopId  });
-            $.cookie('tempActivity_Id', null, { expires: 1, path: '/shop/'+shopId  });
-            $.cookie('tempCreatorName', null, { expires: 1, path: '/shop/'+shopId  });
+            $.cookie('tempActivityId', null, { expires: -1, path: '/shop/'+shopId  });
+            $.cookie('tempActivity_Id', null, { expires: -1, path: '/shop/'+shopId  });
+            $.cookie('tempCreatorName', null, { expires: -1, path: '/shop/'+shopId  });
 
             var operations = function(){
                 //setTimeout(function(){
@@ -1444,9 +1444,9 @@ $(function(){
                 $.cookie('lastActivity_Id', tempActivity_IdGlobal, { expires: 60, path: '/shop/'+shopId  });
                 tempActivityIdGlobal = null;
                 tempActivity_IdGlobal = null;
-                $.cookie('tempActivityId', null, { expires: 1, path: '/shop/'+shopId  });
-                $.cookie('tempActivity_Id', null, { expires: 1, path: '/shop/'+shopId  });
-                $.cookie('tempCreatorName', null, { expires: 1, path: '/shop/'+shopId  });
+                $.cookie('tempActivityId', null, { expires: -1, path: '/shop/'+shopId  });
+                $.cookie('tempActivity_Id', null, { expires: -1, path: '/shop/'+shopId  });
+                $.cookie('tempCreatorName', null, { expires: -1, path: '/shop/'+shopId  });
 
 
 
