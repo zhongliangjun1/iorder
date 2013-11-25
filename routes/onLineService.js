@@ -75,46 +75,56 @@ var registe = function(socket, channel, hostName, registerName){
 var confirmActivity = function(activityId, userName){
 
     var channel = activityId;
-    var listeners = repertory[channel].listeners;
 
-    for (var registerName in listeners) {
-        if (listeners.hasOwnProperty(registerName)) {
+    if( repertory[channel] ) {
+        var listeners = repertory[channel].listeners;
 
-            if(registerName === userName){
-                continue;
-            }
+        for (var registerName in listeners) {
+            if (listeners.hasOwnProperty(registerName)) {
 
-            var socket = listeners[registerName];
-            try {
-                var response = {code:200, type: 'confirmActivity', msg: channel+' 这单已确认并存档'};
-                socket.emit('confirmActivity', response);
-            }catch(e){
-                // 暂只做打印
-                console.log(e);
+                if(registerName === userName){
+                    continue;
+                }
+
+                var socket = listeners[registerName];
+                try {
+                    var response = {code:200, type: 'confirmActivity', msg: channel+' 这单已确认并存档'};
+                    socket.emit('confirmActivity', response);
+                }catch(e){
+                    // 暂只做打印
+                    console.log(e);
+                }
             }
         }
     }
+
 
 }
 
 var closeActivity = function(activityId){
 
     var channel = activityId;
-    var listeners = repertory[channel].listeners;
 
-    for (var registerName in listeners) {
-        if (listeners.hasOwnProperty(registerName)) {
+    if( repertory[channel] ){ // 活动还在
 
-            var socket = listeners[registerName];
-            try {
-                console.log('try disconnect----------');
-                socket.disconnect(true);
-            }catch(e){
-                // 暂只做打印
-                console.log(e);
+        var listeners = repertory[channel].listeners;
+
+        for (var registerName in listeners) {
+            if (listeners.hasOwnProperty(registerName)) {
+
+                var socket = listeners[registerName];
+                try {
+                    console.log('try disconnect----------');
+                    socket.disconnect(true);
+                }catch(e){
+                    // 暂只做打印
+                    console.log(e);
+                }
             }
         }
+
     }
+
 
 }
 
@@ -122,22 +132,26 @@ var closeActivity = function(activityId){
 var addNewOrder = function(order, isFirstShow){
 
     var channel = order.activityId;
-    var listeners = repertory[channel].listeners;
 
-    for (var registerName in listeners) {
-        if (listeners.hasOwnProperty(registerName)) {
+    if( repertory[channel] ){
 
-            if(isFirstShow && registerName === order.userName){
-                continue;
-            }
+        var listeners = repertory[channel].listeners;
 
-            var socket = listeners[registerName];
-            try {
-                var response = {code:200, type: 'addNewOrder' , order: JSON.stringify(order), msg: order.userName+' add new order to channel '+channel};
-                socket.emit('addNewOrder', response);
-            }catch(e){
-                // 暂只做打印
-                console.log(e);
+        for (var registerName in listeners) {
+            if (listeners.hasOwnProperty(registerName)) {
+
+                if(isFirstShow && registerName === order.userName){
+                    continue;
+                }
+
+                var socket = listeners[registerName];
+                try {
+                    var response = {code:200, type: 'addNewOrder' , order: JSON.stringify(order), msg: order.userName+' add new order to channel '+channel};
+                    socket.emit('addNewOrder', response);
+                }catch(e){
+                    // 暂只做打印
+                    console.log(e);
+                }
             }
         }
     }
@@ -147,25 +161,31 @@ var addNewOrder = function(order, isFirstShow){
 
 var removeOrder = function(order){
     var channel = order.activityId;
-    var listeners = repertory[channel].listeners;
 
-    for (var registerName in listeners) {
-        if (listeners.hasOwnProperty(registerName)) {
+    if( repertory[channel] ) {
 
-            if(registerName === order.userName){
-                continue;
-            }
+        var listeners = repertory[channel].listeners;
 
-            var socket = listeners[registerName];
-            try {
-                var response = {code:200, type: 'removeOrder' , order_id: order._id, msg:order.userName+'取消了自己的订单' };
-                socket.emit('removeOrder', response);
-            }catch(e){
-                // 暂只做打印
-                console.log(e);
+        for (var registerName in listeners) {
+            if (listeners.hasOwnProperty(registerName)) {
+
+                if(registerName === order.userName){
+                    continue;
+                }
+
+                var socket = listeners[registerName];
+                try {
+                    var response = {code:200, type: 'removeOrder' , order_id: order._id, msg:order.userName+'取消了自己的订单' };
+                    socket.emit('removeOrder', response);
+                }catch(e){
+                    // 暂只做打印
+                    console.log(e);
+                }
             }
         }
     }
+
+
 }
 
 exports.registe = registe;

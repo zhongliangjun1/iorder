@@ -771,7 +771,8 @@ $(function(){
         //socket = io.connect('http://localhost', {'sync disconnect on unload' : true});
         connectCount = connectCount + 1;
         if(connectCount === 1){
-            socket = io.connect('http://biandang.la');
+            socket = io.connect('http://localhost');
+            //socket = io.connect('http://biandang.la');
         }else{
             socket.socket.connect();
         }
@@ -851,7 +852,7 @@ $(function(){
             }, 1000);
 
             // 通知关闭此活动在服务器端建立的所有socket.io链接
-            socket.emit('disconnect', { msg: 'close me' });
+            //socket.emit('disconnect', { msg: 'close me' });
 
         });
 
