@@ -10,7 +10,7 @@ var schemajs = require('schemajs');
 
 var orderModel = schemajs.create(
     {
-        //shopId : { type:'int', filters:['trim', 'toInt'], required:true, error:'shopId cannot be null' },
+        shopId : { type:'int', filters:['trim', 'toInt'], required:true, error:'shopId cannot be null' },
         productId : { type:'string', required:true, error:'productId cannot be null' },
         size : { type:'string', allownull:true, default:null },
         temperature : { type:'string', allownull:true, default:null },

@@ -33,6 +33,15 @@ $(function(){
     };
     init();
 
+    // pop msg
+    var sendHeadMsg = function(msg){
+        $('#head-pop-msg-content').text(msg);
+        $('#head-pop-msg').fadeIn('slow');
+        setTimeout(function(){
+            $('#head-pop-msg').fadeOut('slow');
+        }, 2000);
+    }
+
     $('#user a').click(function(){
         var rememberName = $.cookie('rememberName');
         var tempActivityId = $.cookie('tempActivityId');
@@ -58,11 +67,7 @@ $(function(){
             overlayNode.addClass('effeckt-show');
         }else{ // note 最好加个验证，防止用户登出再回来是活动已结束，而cookie还未清
             var msg = rememberName+', 你已成功加入了 '+tempActivityId+' 这单订单';
-            $('#head-pop-msg-content').text(msg);
-            $('#head-pop-msg').fadeIn('slow');
-            setTimeout(function(){
-                $('#head-pop-msg').fadeOut('slow');
-            }, 2000);
+            sendHeadMsg(msg);
         }
     });
 
@@ -94,11 +99,7 @@ $(function(){
 
         }else{
             var msg = '近两个月在这家店你都木有订单哦';
-            $('#head-pop-msg-content').text(msg);
-            $('#head-pop-msg').fadeIn('slow');
-            setTimeout(function(){
-                $('#head-pop-msg').fadeOut('slow');
-            }, 2000);
+            sendHeadMsg(msg);
         }
 
 
@@ -253,6 +254,8 @@ $(function(){
         var rememberName = $.cookie('rememberName');
         var tempActivityId = $.cookie('tempActivityId');
 
+        var shopId = parseInt($('#logo').attr('shopId'));
+
 //        rememberName = 'test'; // ------test------
 //        tempActivityId = 'test';
 
@@ -276,9 +279,10 @@ $(function(){
                 }else{
                     orderTreatingNode.addClass('disappear');
                     orderTreatNotOkNode.removeClass('disappear');
+                    sendHeadMsg(returnedData.msg);
                 }
             }
-            addOrder(productId, size, temperature, num, rememberName, tempActivityId, false, false, callback);
+            addOrder(shopId, productId, size, temperature, num, rememberName, tempActivityId, false, false, callback);
         }else{
             var newActivityButtonWrapNode = $('#new-activity-button-wrap');
             var joinActivityButtonWrapNode = $('#join-activity-button-wrap');
@@ -368,10 +372,11 @@ $(function(){
         );
     }
 
-    var addOrder = function(productId, size, temperature, num, userName, activityId, isActivityInit, isFirstShow, callback){
+    var addOrder = function(shopId, productId, size, temperature, num, userName, activityId, isActivityInit, isFirstShow, callback){
 
         $.post("/addorder",
             {
+                shopId:shopId,
                 productId:productId,
                 size:size,
                 temperature:temperature,
@@ -490,6 +495,8 @@ $(function(){
         var rememberName = $.cookie('rememberName');
         var tempActivityId = $.cookie('tempActivityId');
 
+        var shopId = parseInt($('#logo').attr('shopId'));
+
         // check
         if(rememberName === null || rememberName === ''){
             rememberName = $('#name-input').val();
@@ -558,7 +565,6 @@ $(function(){
                             regist2activity(tempActivityId, rememberName, returnedData.creatorName);
                         }, 1000);
 
-                        var shopId = parseInt($('#logo').attr('shopId'));
                         $.cookie('rememberName', rememberName, { path: '/' } );
                         $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
@@ -568,6 +574,7 @@ $(function(){
                     }else{
                         dialogLockingActivityIdErrorNode.removeClass('disappear');
                         newActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
+                        sendHeadMsg(returnedData.msg);
                     }
                 }
 
@@ -594,7 +601,6 @@ $(function(){
 
                         }, 1000);
 
-                        var shopId = parseInt($('#logo').attr('shopId'));
                         $.cookie('rememberName', rememberName, { path: '/' } );
                         $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
@@ -603,10 +609,11 @@ $(function(){
 
                     }else{
                         joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
+                        sendHeadMsg(returnedData.msg);
                     }
                 }
             }
-            addOrder(productId, size, temperature, num, rememberName, tempActivityId, isActivityInit, true, callback);
+            addOrder(shopId, productId, size, temperature, num, rememberName, tempActivityId, isActivityInit, true, callback);
 
         }
     }
@@ -692,6 +699,7 @@ $(function(){
                 }else{
                     dialogLockingActivityIdErrorNode.removeClass('disappear');
                     newActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
+                    sendHeadMsg(returnedData.msg);
                 }
             }
 
@@ -726,6 +734,7 @@ $(function(){
 
                 }else{
                     joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
+                    sendHeadMsg(returnedData.msg);
                 }
             }
         }
@@ -882,11 +891,7 @@ $(function(){
             },
             afterCopy: function(){
                 var msg = '链接已复制到剪贴板';
-                $('#head-pop-msg-content').text(msg);
-                $('#head-pop-msg').fadeIn('slow');
-                setTimeout(function(){
-                    $('#head-pop-msg').fadeOut('slow');
-                }, 2000);
+                sendHeadMsg(msg);
             }
         });
 
@@ -1451,11 +1456,7 @@ $(function(){
 
 
             }else{
-                $('#head-pop-msg-content').text(returnedData.msg);
-                $('#head-pop-msg').fadeIn('slow');
-                setTimeout(function(){
-                    $('#head-pop-msg').fadeOut('slow');
-                }, 2000);
+                sendHeadMsg(returnedData.msg);
             }
         }
 
