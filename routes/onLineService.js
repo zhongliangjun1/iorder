@@ -18,7 +18,7 @@ var Order = mongoose.model('Order', mongooseSchema.OrderSchema);
 
 var repertory = {};
 
-var registe = function(socket, channel, hostName, registerName){
+var registe = function(socket, shopId, channel, hostName, registerName){
 
     //console.log(util.inspect(repertory));
 
@@ -32,6 +32,7 @@ var registe = function(socket, channel, hostName, registerName){
 
         var queryActivity = Activity.findOne()
             .where('activityId').equals(channel)
+            .where('shopId').equals(shopId)
             .where('confirmTime').equals(null);
         queryActivity.select('creatorName activityId shopId orderList createTime confirmTime');
         queryActivity.exec(function(err, activity){

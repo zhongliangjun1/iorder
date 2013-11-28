@@ -34,7 +34,7 @@ var attendActivity = function(req, res){
 
         var queryActivity = Activity.findOne()
             .where('activityId').equals(activityId)
-            .where('shopId').equals(shopId)
+            //.where('shopId').equals(shopId)
             .where('confirmTime').equals(null);
         queryActivity.select('_id creatorName activityId shopId orderList createTime confirmTime');
         queryActivity.exec(function(err, activity){
@@ -44,7 +44,12 @@ var attendActivity = function(req, res){
                 res.end(JSON.stringify({code:500,msg:'服务出问题了'}));
             }else{
 
-                if( !isActivityInit && activity === null){  // 订单已失效 or 不在这家店
+                if( !isActivityInit && activity === null){  // 订单已失效
+
+                    res.writeHead(200, {'Content-type': 'text/json;charset=utf-8'} );
+                    res.end(JSON.stringify({code:201,msg:'订单号无效'}));
+
+                }else if(activity && activity.shopId !== shopId){ // 不在这家店
 
                     res.writeHead(200, {'Content-type': 'text/json;charset=utf-8'} );
                     res.end(JSON.stringify({code:201,msg:'订单号无效'}));
@@ -187,7 +192,7 @@ var addOrder = function(req, res){
 
         var queryActivity = Activity.findOne()
             .where('activityId').equals(activityId)
-            .where('shopId').equals(shopId)
+            //.where('shopId').equals(shopId)
             .where('confirmTime').equals(null);
         queryActivity.select('_id creatorName activityId shopId orderList createTime confirmTime');
         queryActivity.exec(function(err, activity){
@@ -198,6 +203,11 @@ var addOrder = function(req, res){
             }else{
 
                 if( !isActivityInit && activity === null){  // 订单已失效
+
+                    res.writeHead(200, {'Content-type': 'text/json;charset=utf-8'} );
+                    res.end(JSON.stringify({code:201,msg:'订单号无效'}));
+
+                }else if(activity && activity.shopId !== shopId){ // 不在这家店
 
                     res.writeHead(200, {'Content-type': 'text/json;charset=utf-8'} );
                     res.end(JSON.stringify({code:201,msg:'订单号无效'}));

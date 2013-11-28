@@ -9,6 +9,15 @@
 
 $(function(){
 
+    var shopId = parseInt($('#logo').attr('shopId'));
+
+    var temp_cookie_date = new Date();
+    var temp_cookie_minutes = 60*3;
+    temp_cookie_date = new Date(temp_cookie_date.getTime() + (temp_cookie_minutes * 60 * 1000));
+    temp_cookie_date = temp_cookie_date.toGMTString(); // GMT 即格林威治标准时间，现在也称 UTC 即全球标准时间
+    temp_cookie_date = new Date(temp_cookie_date);
+
+
     var rememberNameGlobal = null;
     var tempActivityIdGlobal = null;
     var tempActivity_IdGlobal = null;
@@ -466,24 +475,24 @@ $(function(){
 
             // 发起创建
             if(targetNode.attr('id')==='new-activity-button' || targetNode.attr('id')==='new-activity-button-inner' ){
-                checkInputThenJoinActivity(true); console.log('isJustLogIn new-activity-button');
+                checkInputThenJoinActivity(true); //console.log('isJustLogIn new-activity-button');
             }
 
             // 加入
             if(targetNode.attr('id')==='join-activity-button' || targetNode.attr('id')==='join-activity-button-inner' ){
-                checkInputThenJoinActivity(false); console.log('isJustLogIn join-activity-button');
+                checkInputThenJoinActivity(false); //console.log('isJustLogIn join-activity-button');
             }
 
         }else{
 
             // 发起创建
             if(targetNode.attr('id')==='new-activity-button' || targetNode.attr('id')==='new-activity-button-inner' ){
-                checkInputThenAddOrder(true); console.log('not isJustLogIn new-activity-button');
+                checkInputThenAddOrder(true); //console.log('not isJustLogIn new-activity-button');
             }
 
             // 加入
             if(targetNode.attr('id')==='join-activity-button' || targetNode.attr('id')==='join-activity-button-inner' ){
-                checkInputThenAddOrder(false); console.log('not isJustLogIn join-activity-button');
+                checkInputThenAddOrder(false); //console.log('not isJustLogIn join-activity-button');
             }
         }
 
@@ -566,10 +575,10 @@ $(function(){
                         }, 1000);
 
                         $.cookie('rememberName', rememberName, { path: '/' } );
-                        $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempActivityId', tempActivityId, { expires: temp_cookie_date, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
-                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
-                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: temp_cookie_date, path: '/shop/'+shopId  });
+                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: temp_cookie_date, path: '/shop/'+shopId  });
 
                     }else{
                         dialogLockingActivityIdErrorNode.removeClass('disappear');
@@ -602,10 +611,10 @@ $(function(){
                         }, 1000);
 
                         $.cookie('rememberName', rememberName, { path: '/' } );
-                        $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempActivityId', tempActivityId, { expires: temp_cookie_date, path: '/shop/'+shopId  });
                         tempActivity_IdGlobal = returnedData.activity_Id;
-                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
-                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
+                        $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: temp_cookie_date, path: '/shop/'+shopId  });
+                        $.cookie('tempCreatorName', returnedData.creatorName, { expires: temp_cookie_date, path: '/shop/'+shopId  });
 
                     }else{
                         joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
@@ -691,10 +700,10 @@ $(function(){
                     }, 1000);
 
                     $.cookie('rememberName', rememberName, { path: '/' } );
-                    $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempActivityId', tempActivityId, { expires: temp_cookie_date, path: '/shop/'+shopId  });
                     tempActivity_IdGlobal = returnedData.activity_Id;
-                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
-                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: temp_cookie_date, path: '/shop/'+shopId  });
+                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: temp_cookie_date, path: '/shop/'+shopId  });
 
                 }else{
                     dialogLockingActivityIdErrorNode.removeClass('disappear');
@@ -727,10 +736,10 @@ $(function(){
                     }, 1000);
 
                     $.cookie('rememberName', rememberName, { path: '/' } );
-                    $.cookie('tempActivityId', tempActivityId, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempActivityId', tempActivityId, { expires: temp_cookie_date, path: '/shop/'+shopId  });
                     tempActivity_IdGlobal = returnedData.activity_Id;
-                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: 1/8, path: '/shop/'+shopId  });
-                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: 1/8, path: '/shop/'+shopId  });
+                    $.cookie('tempActivity_Id', returnedData.activity_Id, { expires: temp_cookie_date, path: '/shop/'+shopId  });
+                    $.cookie('tempCreatorName', returnedData.creatorName, { expires: temp_cookie_date, path: '/shop/'+shopId  });
 
                 }else{
                     joinActivityTreatImgNode.attr('src', '/images/source/not-ok.png');
@@ -780,18 +789,17 @@ $(function(){
         //socket = io.connect('http://localhost', {'sync disconnect on unload' : true});
         connectCount = connectCount + 1;
         if(connectCount === 1){
-            socket = io.connect('http://localhost');
-            //socket = io.connect('http://biandang.la');
+            //socket = io.connect('http://localhost');
+            socket = io.connect('http://biandang.la');
         }else{
             socket.socket.connect();
         }
-        socket.emit('register', { activityId: activityId, userName: userName, creatorName: creatorName });
+        socket.emit('register', { shopId: shopId, activityId: activityId, userName: userName, creatorName: creatorName });
 
 
         var orderNode = $('#order');
 
         socket.on('regist-result', function (data) {
-            console.log(data);
             if(orderNode.hasClass('hidden')){ // 尚未展示过order list
                 orderNode.removeClass('hidden');
                 sortAndShowOrderList(JSON.parse(data.activity));

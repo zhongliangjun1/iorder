@@ -61,17 +61,20 @@ io.sockets.on('connection', function (socket) {
     var channel;
 	var registerName;
     var hostName;
+    var shopId;
 	socket.on('register', function (data) {
+        console.log(data);
+        shopId = data.shopId;
         channel = data.activityId;
         registerName = data.userName;
         hostName = data.creatorName;
 
-        onLineService.registe(socket, channel, hostName, registerName);
+        onLineService.registe(socket, shopId, channel, hostName, registerName);
 
 	});
 
     socket.on('closeactivity', function(data){
-        console.log(data);
+        //console.log(data);
         onLineService.closeActivity(channel);
     });
 
