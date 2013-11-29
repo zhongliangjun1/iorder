@@ -60,9 +60,9 @@ var enterShopById = function(req, res){
                                     handleError(req, res);
                                 }else{
                                     if(activity){
-                                        res.cookie('tempActivityId', tempActivityId, { maxAge: 60000*60*12, path: '/shop/'+shopId });
-                                        res.cookie('tempActivity_Id', activity._id, { maxAge: 60000*60*12, path: '/shop/'+shopId });
-                                        res.cookie('tempCreatorName', activity.creatorName, { maxAge: 60000*60*12, path: '/shop/'+shopId });
+                                        res.cookie('tempActivityId', tempActivityId, { maxAge: 60000*60*3, path: '/shop/'+shopId });
+                                        res.cookie('tempActivity_Id', activity._id.toString(), { maxAge: 60000*60*3, path: '/shop/'+shopId });
+                                        res.cookie('tempCreatorName', activity.creatorName, { maxAge: 60000*60*3, path: '/shop/'+shopId });
                                     }
                                     res.render('menu', {'shopId':shopId, 'shop':shop, 'productsNum':productsNum, 'categorys':categorys, 'cate2productsMap':cate2productsMap});
                                 }
